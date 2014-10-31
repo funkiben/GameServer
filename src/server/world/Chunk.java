@@ -53,9 +53,18 @@ public class Chunk {
 			cx -= size;
 		}
 		
+		if (x < 0) {
+			cx -= size;
+		}
+		
 		if (y >= 0) {
 			cy -= size;
 		}
+		
+		if (y < 0) {
+			cy -= size;
+		}
+		
 		
 		return new Location(cx, cy);
 	}
