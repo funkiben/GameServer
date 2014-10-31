@@ -1,0 +1,15 @@
+/bin
+/.classpath
+/.project
+/.settings
+/build
+/dist
+/manifest.mf
+.DS_Store
+/nbproject
+/world
+/users
+/banned-ips.txt
+/banned-players.txt
+/server.cfg
+/.git
