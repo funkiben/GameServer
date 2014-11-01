@@ -26,7 +26,7 @@ public class Main {
 			new CmdKick(),
 			new CmdBan(),
 			new CmdIPBan(),
-			new CmdChunks(),
+			new CmdWorld(),
 			new CmdSaveWorld()
 		);
 		

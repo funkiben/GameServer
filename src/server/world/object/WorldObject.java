@@ -16,10 +16,12 @@ public class WorldObject implements Serializable {
 	
 	private final transient World world;
 	private transient boolean save = true;
+	
 	protected final Location location;
 	private final WorldObjectType type;
 	private final int id;
 	private final Object[] customData;
+	private boolean visible = true;
 
 	public WorldObject(World world, Location location, WorldObjectType type, Object...customData) {
 		this.world = world;
@@ -43,6 +45,14 @@ public class WorldObject implements Serializable {
 	
 	public void setSave(boolean b) {
 		save = b;
+	}
+	
+	public void setVisible(boolean b) {
+		visible = b;
+	}
+	
+	public boolean isVisible() {
+		return visible;
 	}
 	
 	public boolean canSave() {
@@ -88,7 +98,7 @@ public class WorldObject implements Serializable {
 	}
 	
 	public boolean updateWithPlayer(Player player) {
-		if (player != this && player.canSeeObjectsChunk(this)) {
+		if (player != this && player.canSeeObjectsChunk(this) && isVisible()) {
 			player.sendMessage(getMessage());
 			return true;
 		}

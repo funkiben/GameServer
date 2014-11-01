@@ -16,7 +16,7 @@ public class UserAccount {
 	
 	private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
 	
-	// INFO FILE SETUP
+	// FILE SETUP: LINE NUMBERS
 	private final static int PASSWORD = 0;
 	private final static int IP_ADDRESSES = 1;
 	private final static int JOIN_DATE = 2;

@@ -2,10 +2,10 @@ package server.command;
 
 import java.util.Map;
 
-public class CmdChunks extends CmdServer {
+public class CmdWorld extends CmdServer {
 
-	public CmdChunks() {
-		super("chunks", "Displays information about the loaded chunks");
+	public CmdWorld() {
+		super("world", "Displays information about the world");
 		
 	}
 
@@ -16,6 +16,7 @@ public class CmdChunks extends CmdServer {
 		
 		str += server.getWorld().getChunks().size() + " Chunks\n";
 		str += server.getWorld().getObjects().size() + " Objects\n";
+		str += server.getWorld().getSize() + " Kilobytes\n";
 		
 		return str;
 	}

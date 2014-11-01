@@ -131,6 +131,10 @@ public class Chunk {
 		return objects.get(id);
 	}
 	
+	public long getSize() {
+		return file.length();
+	}
+	
 	public void changeObjectsChunk(WorldObject object, Chunk newChunk) {
 		newChunk.objects.put(object.getId(), object);
 		objects.remove(object.getId());

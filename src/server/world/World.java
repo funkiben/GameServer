@@ -123,5 +123,15 @@ public class World {
 			chunk.save();
 		}
 	}
+	
+	public double getSize() {
+		long size = 0;
+		
+		for (Chunk chunk : chunkMap.values()) {
+			size += chunk.getSize();
+		}
+		
+		return size / 1000D;
+	}
 
 }
