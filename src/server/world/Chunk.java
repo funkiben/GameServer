@@ -18,6 +18,7 @@ import server.event.world.object.WorldObjectRemoveEvent;
 import server.main.GameServer;
 import server.world.object.Player;
 import server.world.object.WorldObject;
+import server.world.object.WorldObjectType;
 import net.funkitech.util.Location;
 
 
@@ -127,17 +128,29 @@ public class Chunk {
 		return new ArrayList<WorldObject>(objects.values());
 	}
 	
+	public List<WorldObject> getObjects(WorldObjectType type) {
+		List<WorldObject> list = new ArrayList<WorldObject>();
+		
+		for (WorldObject obj : objects.values()) {
+			if (obj.getType() == type) {
+				list.add(obj);
+			}
+		}
+		
+		return list;
+	}
+	
 	public WorldObject getObject(int id) {
 		return objects.get(id);
 	}
 	
-	public long getSize() {
-		return file.length();
+	public double getSize() {
+		return file.length() / 1000D;
 	}
 	
 	public void changeObjectsChunk(WorldObject object, Chunk newChunk) {
-		newChunk.objects.put(object.getId(), object);
 		objects.remove(object.getId());
+		newChunk.objects.put(object.getId(), object);
 	}
 	
 	public void addObject(WorldObject object) {
@@ -223,6 +236,7 @@ public class Chunk {
 					
 					if (obj instanceof WorldObject) {
 						objects.put(((WorldObject) obj).getId(), (WorldObject) obj);
+						((WorldObject) obj).initializeFromChunk();
 					} else {
 						nonWorldObjects.add(obj);
 					}

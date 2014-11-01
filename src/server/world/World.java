@@ -8,6 +8,7 @@ import java.util.Map;
 
 import server.main.GameServer;
 import server.world.object.WorldObject;
+import server.world.object.WorldObjectType;
 import net.funkitech.util.Location;
 
 
@@ -85,6 +86,16 @@ public class World {
 		
 		for (Chunk chunk : chunkMap.values()) {
 			list.addAll(chunk.getObjects());
+		}
+		
+		return list;
+	}
+	
+	public List<WorldObject> getObjects(WorldObjectType type) {
+		List<WorldObject> list = new ArrayList<WorldObject>();
+		
+		for (Chunk chunk : chunkMap.values()) {
+			list.addAll(chunk.getObjects(type));
 		}
 		
 		return list;

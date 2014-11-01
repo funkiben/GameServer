@@ -27,7 +27,10 @@ public class Main {
 			new CmdBan(),
 			new CmdIPBan(),
 			new CmdWorld(),
-			new CmdSaveWorld()
+			new CmdSaveWorld(),
+			new CmdTestObject(),
+			new CmdObjects(),
+			new CmdChunk()
 		);
 		
 		Scanner scanner = new Scanner(System.in);

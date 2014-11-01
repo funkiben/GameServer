@@ -6,7 +6,6 @@ import java.util.Arrays;
 import server.event.world.object.WorldObjectMoveEvent;
 import server.main.GameServer;
 import server.world.Chunk;
-import server.world.World;
 import net.funkitech.util.Location;
 import net.funkitech.util.server.messaging.Message;
 
@@ -14,7 +13,6 @@ public class WorldObject implements Serializable {
 
 	private static final long serialVersionUID = -3138850811927672440L;
 	
-	private final transient World world;
 	private transient boolean save = true;
 	
 	protected final Location location;
@@ -23,16 +21,16 @@ public class WorldObject implements Serializable {
 	private final Object[] customData;
 	private boolean visible = true;
 
-	public WorldObject(World world, Location location, WorldObjectType type, Object...customData) {
-		this.world = world;
+	public WorldObject(Location location, WorldObjectType type, Object...customData) {
 		this.location = location;
-		this.id = world.getUnusedObjectID();
+		this.id = GameServer.inst.getWorld().getUnusedObjectID();
 		this.type = type;
 		this.customData = customData;
 	}
 	
-	public World getWorld() {
-		return world;
+	public void initializeFromChunk() {
+		save = true;
+		onLoadFromChunk();
 	}
 	
 	public Location getLocation() {
@@ -49,6 +47,12 @@ public class WorldObject implements Serializable {
 	
 	public void setVisible(boolean b) {
 		visible = b;
+		
+		if (!visible) {
+			removeFromPlayers();
+		} else {
+			updateWithPlayers();
+		}
 	}
 	
 	public boolean isVisible() {
@@ -88,7 +92,7 @@ public class WorldObject implements Serializable {
 	}
 	
 	public Chunk getChunk() {
-		return world.getChunk(location);
+		return GameServer.inst.getWorld().getChunk(location);
 	}
 	
 	public void updateWithPlayers() {
@@ -98,7 +102,7 @@ public class WorldObject implements Serializable {
 	}
 	
 	public boolean updateWithPlayer(Player player) {
-		if (player != this && player.canSeeObjectsChunk(this) && isVisible()) {
+		if (player != this && player.canSeeObjectsChunk(this) && visible) {
 			player.sendMessage(getMessage());
 			return true;
 		}
@@ -131,6 +135,10 @@ public class WorldObject implements Serializable {
 	
 	public Message getMessage() {
 		return new Message("worldobject", id, type.getId(), location.clone(), Arrays.copyOf(customData, customData.length));
+	}
+	
+	public void onLoadFromChunk() {
+		
 	}
 	
 }

@@ -16,8 +16,8 @@ public class WorldObjectChangeChunkListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onObjectMove(WorldObjectMoveEvent event) {
 		
-		Chunk oldChunk = world.getChunk(event.getNewLocation());
-		Chunk newChunk = world.getChunk(event.getPrevLocation());
+		Chunk oldChunk = world.getChunk(event.getPrevLocation());
+		Chunk newChunk = world.getChunk(event.getNewLocation());
 		
 		if (newChunk != oldChunk) {
 			oldChunk.changeObjectsChunk(event.getWorldObject(), newChunk);

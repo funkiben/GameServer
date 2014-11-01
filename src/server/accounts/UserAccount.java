@@ -8,9 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.funkitech.util.FunkiFile;
-import net.funkitech.util.Location;
-
-
 
 public class UserAccount {
 	
@@ -21,7 +18,7 @@ public class UserAccount {
 	private final static int IP_ADDRESSES = 1;
 	private final static int JOIN_DATE = 2;
 	private final static int LAST_ONLINE = 3;
-	private final static int LOCATION = 4;
+	private final static int OBJECT_ID = 4;
 	
 	private final String name;
 	private final File dir;
@@ -66,8 +63,8 @@ public class UserAccount {
 		return DATE_FORMAT.parse(infoFile.getReader().getLine(LAST_ONLINE));
 	}
 	
-	public Location getLocation() {
-		return Location.parse(infoFile.getReader().getLine(LOCATION));
+	public int getObjectID() {
+		return Integer.parseInt(infoFile.getReader().getLine(OBJECT_ID));
 	}
 	
 	public void setPassword(String pw) {
@@ -99,8 +96,8 @@ public class UserAccount {
 		infoFile.getWriter().setLine(LAST_ONLINE, DATE_FORMAT.format(new Date()));
 	}
 	
-	public void setLocation(Location loc) {
-		infoFile.getWriter().setLine(LOCATION, loc.toString());
+	public void setObjectID(int id) {
+		infoFile.getWriter().setLine(OBJECT_ID, Integer.toString(id));
 	}
 	
 	public void save() {

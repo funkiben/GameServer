@@ -12,6 +12,7 @@ import server.event.EventManager;
 import server.event.player.PlayerDisconnectEvent;
 import server.world.World;
 import server.world.object.Player;
+import net.funkitech.util.Location;
 import net.funkitech.util.server.ClientHandler;
 import net.funkitech.util.server.Server;
 
@@ -97,9 +98,30 @@ public class GameServer extends Server {
 		return null;
 	}
 	
-	public Player addPlayer(UserAccount account, ClientHandler handler) {
-		Player player = new Player(account, handler);
+	public Player enablePlayer(UserAccount account, ClientHandler handler) {
+		Player player = (Player) world.getObject(account.getObjectID());
+		
+		if (player == null) {
+			player = createNewPlayer(account.getName(), true);
+			
+			account.setObjectID(player.getId());
+			account.save();
+			
+			log("WARNING: Player " + player.getName() + " already had an account but it being given a new Player instance!");
+		} else {
+			player.setVisible(true);
+		}
+		
 		players.put(account.getName(), player);
+		
+		player.registerWithClient(handler);
+		
+		return player;
+	}
+	
+	public Player createNewPlayer(String name, boolean visible) {
+		Player player = new Player(new Location(0, 0), name);
+		player.setVisible(visible);
 		world.addObject(player);
 		return player;
 	}
@@ -112,20 +134,19 @@ public class GameServer extends Server {
 			return;
 		}
 		
-		players.remove(player.getName());
-		world.removeObject(player);
+		PlayerDisconnectEvent event = new PlayerDisconnectEvent(player);
+		eventManager.callEvent(event);
 		
-		player.getAccount().setLocation(player.getLocation());
+		players.remove(player.getName());
+		
+		player.setVisible(false);
+		
 		player.getAccount().updateLastOnlineDate();
 		player.getAccount().save();
 		
 		for (Player p : players.values()) {
 			p.sendMessage("playerDisconnect", player.getName());
 		}
-		
-
-		PlayerDisconnectEvent event = new PlayerDisconnectEvent(player);
-		eventManager.callEvent(event);
 		
 		log(player.getName() + " disconnected at " + player.getLocation());
 	}

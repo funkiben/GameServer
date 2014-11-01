@@ -16,7 +16,7 @@ public class CmdOnline extends CmdServer {
 		
 	
 		for (Player player : server.getOnlinePlayes()) {
-			ls += player.getName() + "  " + player.getIPAddress() + "  " + player.getLocation() + "\n";
+			ls += player.getName() + " | " + player.getIPAddress() + " | " + player.getLocation() + " | " + player.getId() + "\n";
 		}
 		
 		return ls;

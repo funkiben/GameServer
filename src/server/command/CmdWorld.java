@@ -16,7 +16,7 @@ public class CmdWorld extends CmdServer {
 		
 		str += server.getWorld().getChunks().size() + " Chunks\n";
 		str += server.getWorld().getObjects().size() + " Objects\n";
-		str += server.getWorld().getSize() + " Kilobytes\n";
+		str += server.getWorld().getSize() + " Megabytes\n";
 		
 		return str;
 	}

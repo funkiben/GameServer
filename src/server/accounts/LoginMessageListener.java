@@ -36,16 +36,16 @@ public class LoginMessageListener implements MessageListener {
 		account.addIP(client.getAddress().toString());
 		account.save();
 		
-		GameServer.inst.log(username + " logged in from " + client.getAddress() + " at " + account.getLocation());
-		
-		client.sendMessage(new Message("loginSuccess", account.getLocation()));
-		
 		Player player = GameServer.inst.getPlayer(username);
 		if (player != null) {
 			player.kick("You logged in from another location!");
 		}
 		
-		player = GameServer.inst.addPlayer(account, client);
+		player = GameServer.inst.enablePlayer(account, client);
+		
+		client.sendMessage(new Message("loginSuccess", player.getLocation()));
+		
+		GameServer.inst.log(username + " logged in with ID " + player.getId() + " from " + client.getAddress() + " at " + player.getLocation());
 		
 		PlayerLoginEvent event = new PlayerLoginEvent(player);
 		GameServer.inst.getEventManager().callEvent(event);

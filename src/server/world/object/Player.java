@@ -11,14 +11,13 @@ import server.accounts.UserAccount;
 import server.event.player.PlayerMoveEvent;
 import server.main.GameServer;
 import server.world.Chunk;
-import server.world.World;
-
 
 public class Player extends WorldObject {
 	
 	private static final long serialVersionUID = -6691489083508913780L;
 	
-	public static List<Chunk> getPlayersChunks(World world, Location location) {
+	public static List<Chunk> getPlayersChunks(Location location) {
+		
 		List<Chunk> list = new ArrayList<Chunk>();
 		
 		int tx = Chunk.toChunkX(location.getX());
@@ -26,7 +25,7 @@ public class Player extends WorldObject {
 		
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
-				list.add(world.getChunk(x + tx, y + ty));
+				list.add(GameServer.inst.getWorld().getChunk(x + tx, y + ty));
 			}
 		}
 		
@@ -35,26 +34,23 @@ public class Player extends WorldObject {
 	
 	
 	
-	private final String name;
-	private final UserAccount account;
-	private final ClientHandler handler;
+	private transient String name;
+	private transient UserAccount account;
+	private transient ClientHandler handler = null;
 	
-	public Player(UserAccount account, ClientHandler handler) {
-		super(GameServer.inst.getWorld(), account.getLocation(), WorldObjectType.PLAYER, account.getName());
+	public Player(Location location, String name) {
+		super(location, WorldObjectType.PLAYER, name);
 		
-		this.account = account;
-		this.handler = handler;
+		this.name = name;
+		account = GameServer.inst.getUserAccountDB().getAccount(name);
 		
-		name = account.getName();
-		
-		setSave(false);
-		
-		registerWithClient();
-		
-		for (Chunk chunk : getPlayersChunks()) {
-			sendChunk(chunk);
-		}
-		
+	}
+	
+	@Override
+	public void onLoadFromChunk() {
+		name = (String) getCustomData()[0];
+		account = GameServer.inst.getUserAccountDB().getAccount(name);
+		setVisible(false);
 	}
 	
 	public String getName() {
@@ -116,13 +112,19 @@ public class Player extends WorldObject {
 	}
 	
 	public List<Chunk> getPlayersChunks() {
-		return getPlayersChunks(getWorld(), location);
+		return getPlayersChunks(location);
 	}
 	
-	public void registerWithClient() {
+	public void registerWithClient(ClientHandler handler) {
+		this.handler = handler;
+		
 		Message msg = getMessage();
 		msg.getArgs()[1] = WorldObjectType.CONTROLLED_PLAYER.getId();
 		sendMessage(msg);
+		
+		for (Chunk chunk : getPlayersChunks()) {
+			sendChunk(chunk);
+		}
 	}
 	
 	public void sendChunk(Chunk chunk) {
@@ -149,8 +151,8 @@ public class Player extends WorldObject {
 	}
 	
 	private void sendNewChunks(Location prevloc, Location newloc) {
-		List<Chunk> newChunks = Player.getPlayersChunks(getWorld(), newloc);
-		List<Chunk> oldChunks = Player.getPlayersChunks(getWorld(), prevloc);
+		List<Chunk> newChunks = Player.getPlayersChunks(newloc);
+		List<Chunk> oldChunks = Player.getPlayersChunks(prevloc);
 		
 		outer:
 		for (Chunk newchunk : newChunks) {

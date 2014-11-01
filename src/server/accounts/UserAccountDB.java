@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.funkitech.util.Location;
-
+import server.main.GameServer;
+import server.world.object.Player;
 
 public class UserAccountDB {
 	
@@ -78,9 +78,13 @@ public class UserAccountDB {
 		account.setPassword(pw);
 		account.setJoinDate(new Date());
 		account.addIP(ip);
-		account.setLocation(new Location(0, 0));
-		account.save();
 		map.put(name, account);
+		
+		Player player = GameServer.inst.createNewPlayer(name, false);
+		
+		account.setObjectID(player.getId());
+		
+		account.save();
 	}
 	
 }

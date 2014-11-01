@@ -16,16 +16,16 @@ public class TestWorldGenerator extends WorldGenerator {
 		
 		
 		for (int i = 100; i <= 700; i+= 100) {
-			object = new WorldObject(world, chunk.getLocation().add(i, 100), WorldObjectType.BLOCK);
+			object = new WorldObject(chunk.getLocation().add(i, 100), WorldObjectType.BLOCK);
 			chunk.addObject(object);
 			
-			object = new WorldObject(world, chunk.getLocation().add(i, 700), WorldObjectType.BLOCK);
+			object = new WorldObject(chunk.getLocation().add(i, 700), WorldObjectType.BLOCK);
 			chunk.addObject(object);
 			
-			object = new WorldObject(world, chunk.getLocation().add(700, i), WorldObjectType.BLOCK);
+			object = new WorldObject(chunk.getLocation().add(700, i), WorldObjectType.BLOCK);
 			chunk.addObject(object);
 			
-			object = new WorldObject(world, chunk.getLocation().add(100, i), WorldObjectType.BLOCK);
+			object = new WorldObject(chunk.getLocation().add(100, i), WorldObjectType.BLOCK);
 			chunk.addObject(object);
 			
 		}

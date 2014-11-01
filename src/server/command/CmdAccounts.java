@@ -17,7 +17,7 @@ public class CmdAccounts extends CmdServer {
 		String ls = new String();
 		
 		for (UserAccount a : server.getUserAccountDB().getAccounts()) {
-			ls += a.getName() + "\n";
+			ls += a.getName() + " | " + a.getObjectID() + "\n";
 		}
 		
 		return ls;
