@@ -23,13 +23,13 @@ import net.funkitech.util.Location;
 
 public class Chunk {
 	
-	public static final int size = 800;
+public static final int size = 800;
 	
 	public static int toChunkX(double x) {
 		int cx = (int) (x / size);
 		
-		if (x >= 0) {
-			cx++;
+		if (x <= 0) {
+			cx--;
 		}
 		
 		return cx;
@@ -38,35 +38,15 @@ public class Chunk {
 	public static int toChunkY(double y) {
 		int cy = (int) (y / size);
 		
-		if (y >= 0) {
-			cy++;
+		if (y <= 0) {
+			cy--;
 		}
 		
 		return cy;
 	}
 	
 	public static Location getChunkLocation(int x, int y) {
-		double cx = x * size;
-		double cy = y * size;
-		
-		if (x >= 0) {
-			cx -= size;
-		}
-		
-		if (x < 0) {
-			cx -= size;
-		}
-		
-		if (y >= 0) {
-			cy -= size;
-		}
-		
-		if (y < 0) {
-			cy -= size;
-		}
-		
-		
-		return new Location(cx, cy);
+		return new Location(x * size, y * size);
 	}
 	
 	

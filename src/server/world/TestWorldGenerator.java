@@ -2,8 +2,6 @@ package server.world;
 
 import server.world.object.WorldObject;
 import server.world.object.WorldObjectType;
-import net.funkitech.util.Location;
-
 
 public class TestWorldGenerator extends WorldGenerator {
 	
@@ -14,31 +12,29 @@ public class TestWorldGenerator extends WorldGenerator {
 	@Override
 	public void populateChunk(Chunk chunk) {
 		
-		double blocks = 200;
+		WorldObject object;
 		
-		for (int x = 0; x < Chunk.size / blocks; x++) {
-			Location location = chunk.getLocation().add(x * blocks, 60);
-			WorldObject object = new WorldObject(world, location, WorldObjectType.BLOCK);
+		for (int i = 100; i <= 700; i+= 100) {
+			object = new WorldObject(world, chunk.getLocation().add(i, 100), WorldObjectType.BLOCK);
 			chunk.addObject(object);
+			
+			object = new WorldObject(world, chunk.getLocation().add(i, 700), WorldObjectType.BLOCK);
+			chunk.addObject(object);
+			
+			object = new WorldObject(world, chunk.getLocation().add(700, i), WorldObjectType.BLOCK);
+			chunk.addObject(object);
+			
+			object = new WorldObject(world, chunk.getLocation().add(100, i), WorldObjectType.BLOCK);
+			chunk.addObject(object);
+			
 		}
 		
-		for (int x = 0; x < Chunk.size / blocks; x++) {
-			Location location = chunk.getLocation().add(x * blocks, Chunk.size - 60);
-			WorldObject object = new WorldObject(world, location, WorldObjectType.BLOCK);
-			chunk.addObject(object);
-		}
+//		for (WorldObject obj : chunk.getObjects()) {
+//			if (obj.getChunkX() != chunk.getX() || obj.getChunkY() != chunk.getY()) {
+//				System.out.println("NOPE!");
+//			}
+//		}
 		
-		for (int y = 0; y < Chunk.size / blocks; y++) {
-			Location location = chunk.getLocation().add(60, y * blocks);
-			WorldObject object = new WorldObject(world, location, WorldObjectType.BLOCK);
-			chunk.addObject(object);
-		}
-		
-		for (int y = 0; y < Chunk.size / blocks; y++) {
-			Location location = chunk.getLocation().add(Chunk.size - 60, y * blocks);
-			WorldObject object = new WorldObject(world, location, WorldObjectType.BLOCK);
-			chunk.addObject(object);
-		}
 		
 	}
 
