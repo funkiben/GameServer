@@ -15,11 +15,11 @@ public class WorldObject implements Serializable {
 	private static final long serialVersionUID = -3138850811927672440L;
 	
 	private final transient World world;
+	private transient boolean save = true;
 	protected final Location location;
 	private final WorldObjectType type;
 	private final int id;
 	private final Object[] customData;
-	private boolean save = true;
 
 	public WorldObject(World world, Location location, WorldObjectType type, Object...customData) {
 		this.world = world;

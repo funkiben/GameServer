@@ -25,6 +25,8 @@ public class World {
 		
 		load();
 		
+		GameServer.inst.getEventManager().registerListener(new WorldObjectChangeChunkListener(this));
+		
 	}
 	
 	public void load() {

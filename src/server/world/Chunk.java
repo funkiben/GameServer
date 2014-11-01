@@ -143,6 +143,11 @@ public class Chunk {
 		return objects.get(id);
 	}
 	
+	public void changeObjectsChunk(WorldObject object, Chunk newChunk) {
+		newChunk.objects.put(object.getId(), object);
+		objects.remove(object.getId());
+	}
+	
 	public void addObject(WorldObject object) {
 		NewWorldObjectEvent event = new NewWorldObjectEvent(object);
 		GameServer.inst.getEventManager().callEvent(event);
