@@ -14,6 +14,7 @@ public class TestWorldGenerator extends WorldGenerator {
 		
 		WorldObject object;
 		
+		
 		for (int i = 100; i <= 700; i+= 100) {
 			object = new WorldObject(world, chunk.getLocation().add(i, 100), WorldObjectType.BLOCK);
 			chunk.addObject(object);

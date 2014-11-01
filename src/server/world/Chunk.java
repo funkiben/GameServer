@@ -23,9 +23,13 @@ import net.funkitech.util.Location;
 
 public class Chunk {
 	
-public static final int size = 800;
+	public static final int size = 800;
 	
 	public static int toChunkX(double x) {
+		if (x <= 0) {
+			x++;
+		}
+		
 		int cx = (int) (x / size);
 		
 		if (x <= 0) {
@@ -36,6 +40,10 @@ public static final int size = 800;
 	}
 	
 	public static int toChunkY(double y) {
+		if (y <= 0) {
+			y++;
+		}
+		
 		int cy = (int) (y / size);
 		
 		if (y <= 0) {
