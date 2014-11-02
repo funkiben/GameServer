@@ -154,8 +154,8 @@ public class GameServer extends Server {
 	@Override
 	public void afterStopped() {
 		log("Saving world...");
-		world.save();
-		log("Done");
+		int amount = world.save(false);
+		log("Done. Saved " + amount + " chunks");
 	}
 
 }

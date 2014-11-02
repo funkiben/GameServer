@@ -26,7 +26,7 @@ public class World {
 		
 		load();
 		
-		GameServer.inst.getEventManager().registerListener(new WorldObjectChangeChunkListener(this));
+		GameServer.inst.getEventManager().registerListener(new WorldObjectMoveListener(this));
 		
 	}
 	
@@ -129,10 +129,29 @@ public class World {
 		return id;
 	}
 	
-	public void save() {
+	public int getUnsavedChunks() {
+		int chunks = 0;
+		
 		for (Chunk chunk : chunkMap.values()) {
-			chunk.save();
+			if (chunk.needsSave()) {
+				chunks++;
+			}
 		}
+		
+		return chunks;
+	}
+	
+	public int save(boolean all) {
+		int chunks = 0;
+		
+		for (Chunk chunk : chunkMap.values()) {
+			if (chunk.needsSave() || all) {
+				chunk.save();
+				chunks++;
+			}
+		}
+		
+		return chunks;
 	}
 	
 	public double getSize() {

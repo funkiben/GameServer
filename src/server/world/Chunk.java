@@ -66,6 +66,7 @@ public class Chunk {
 	private final File file;
 	private final Map<Integer, WorldObject> objects = new HashMap<Integer, WorldObject>();
 	private Object[] data = new Object[0];
+	private boolean needsSave = false;
 	
 	public Chunk(World world, int x, int y) {
 		this.x = x;
@@ -104,6 +105,14 @@ public class Chunk {
 		
 	}
 	
+	public boolean needsSave() {
+		return needsSave;
+	}
+	
+	public void setNeedsSave(boolean b) {
+		needsSave = b;
+	}
+	
 	public Location getLocation() {
 		return getChunkLocation(x, y);
 	}
@@ -122,6 +131,7 @@ public class Chunk {
 	
 	public void setData(Object...data) {
 		this.data = data;
+		needsSave = true;
 	}
 	
 	public List<WorldObject> getObjects() {
@@ -151,6 +161,7 @@ public class Chunk {
 	public void changeObjectsChunk(WorldObject object, Chunk newChunk) {
 		objects.remove(object.getId());
 		newChunk.objects.put(object.getId(), object);
+		needsSave = true;
 	}
 	
 	public void addObject(WorldObject object) {
@@ -162,6 +173,8 @@ public class Chunk {
 		objects.put(object.getId(), object);
 		
 		object.updateWithPlayers();
+		
+		needsSave = true;
 		
 	}
 	
@@ -181,6 +194,8 @@ public class Chunk {
 		
 		object.removeFromPlayers();
 		objects.remove(id);
+		
+		needsSave = true;
 		
 		return true;
 	}
@@ -214,6 +229,8 @@ public class Chunk {
 			
 			os.flush();
 			os.close();
+			
+			needsSave = false;
 			
 		} catch (IOException e) {
 			e.printStackTrace();

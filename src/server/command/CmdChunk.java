@@ -23,10 +23,12 @@ public class CmdChunk extends CmdServer {
 		
 		String str = new String();
 		
+		str += chunk.getSize() + " Kilobytes\n";
 		str += chunk.getObjects().size() + " Objects\n";
 		for (WorldObjectType type : WorldObjectType.values()) {
 			str += chunk.getObjects(type).size() + " " + type + " Objects\n";
 		}
+		
 		
 		return str;
 	}

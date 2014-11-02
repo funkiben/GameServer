@@ -5,11 +5,11 @@ import server.event.EventPriority;
 import server.event.Listener;
 import server.event.world.object.WorldObjectMoveEvent;
 
-public class WorldObjectChangeChunkListener implements Listener {
+public class WorldObjectMoveListener implements Listener {
 	
 	private final World world;
 	
-	public WorldObjectChangeChunkListener(World world) {
+	public WorldObjectMoveListener(World world) {
 		this.world = world;
 	}
 	
@@ -22,6 +22,8 @@ public class WorldObjectChangeChunkListener implements Listener {
 		if (newChunk != oldChunk) {
 			oldChunk.changeObjectsChunk(event.getWorldObject(), newChunk);
 		}
+		
+		newChunk.setNeedsSave(true);
 	}
 	
 }
