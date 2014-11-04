@@ -36,17 +36,17 @@ public class GameServer extends Server {
 		
 		this.config = config;
 		
-		new ServerTickThread(this, config.getTPS());
-		
 		accountDB = new UserAccountDB(this);
 
 		eventManager.registerListener(banManager);
 		
-		getMessageListeningManager().registerListeners(new PlayerMessageListener());
+		getMessageListeningManager().registerListeners(new PlayerMessageListener(), new PlayerButtonMessageListener(this));
 		
 		log("Loading world with " + config.getWorldGenerator().getName() + " WorldGenerator");
 		world = new World(this, config.getWorldGenerator());
 		log(world.getChunks().size() + " chunks loaded");
+		
+		new ServerTickThread(this, config.getTPS());
 		
 	}
 	

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import server.event.EventHandler;
-import server.event.EventPriority;
 import server.event.Listener;
 import server.event.server.ServerTickEvent;
 import server.event.world.object.WorldObjectMoveEvent;
@@ -176,7 +175,7 @@ public class WorldObject implements Serializable {
 			this.object = object;
 		}
 		
-		@EventHandler(priority = EventPriority.NORMAL)
+		@EventHandler
 		public void onTick(ServerTickEvent event) {
 			object.onServerTick(event.getTicks());
 		}
