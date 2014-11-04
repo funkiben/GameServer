@@ -15,7 +15,6 @@ import java.util.Map;
 import server.event.world.NewChunkEvent;
 import server.event.world.object.NewWorldObjectEvent;
 import server.event.world.object.WorldObjectRemoveEvent;
-import server.main.GameServer;
 import server.world.object.Player;
 import server.world.object.WorldObject;
 import server.world.object.WorldObjectType;
@@ -61,6 +60,7 @@ public class Chunk {
 	
 	
 	
+	private final World world;
 	private final int x;
 	private final int y;
 	private final File file;
@@ -69,6 +69,7 @@ public class Chunk {
 	private boolean needsSave = false;
 	
 	public Chunk(World world, int x, int y) {
+		this.world = world;
 		this.x = x;
 		this.y = y;
 		file = new File(world.getFolder(), x + "," + y + ".chunk");
@@ -84,7 +85,7 @@ public class Chunk {
 			world.getGenerator().populateChunk(this);
 			
 			NewChunkEvent event = new NewChunkEvent(this);
-			GameServer.inst.getEventManager().callEvent(event);
+			world.getServer().getEventManager().callEvent(event);
 			
 		} else {
 		
@@ -94,7 +95,8 @@ public class Chunk {
 		
 	}
 	
-	public Chunk(File file) {
+	public Chunk(World world, File file) {
+		this.world = world;
 		this.file = file;
 		
 		String[] coords = file.getName().replace(".chunk", "").split(",");
@@ -115,6 +117,10 @@ public class Chunk {
 	
 	public Location getLocation() {
 		return getChunkLocation(x, y);
+	}
+	
+	public World getWorld() {
+		return world;
 	}
 	
 	public int getX() {
@@ -166,7 +172,7 @@ public class Chunk {
 	
 	public void addObject(WorldObject object) {
 		NewWorldObjectEvent event = new NewWorldObjectEvent(object);
-		GameServer.inst.getEventManager().callEvent(event);
+		world.getServer().getEventManager().callEvent(event);
 		
 		if (event.isCancelled()) return;
 		
@@ -186,7 +192,7 @@ public class Chunk {
 		}
 		
 		WorldObjectRemoveEvent event = new WorldObjectRemoveEvent(object);
-		GameServer.inst.getEventManager().callEvent(event);
+		world.getServer().getEventManager().callEvent(event);
 		
 		if (event.isCancelled()) {
 			return false;
@@ -279,7 +285,7 @@ public class Chunk {
 	public List<Player> getViewingPlayers() {
 		List<Player> list = new ArrayList<Player>();
 		
-		for (Player player : GameServer.inst.getOnlinePlayes()) {
+		for (Player player : world.getServer().getOnlinePlayes()) {
 			if (player.canSeeChunk(x, y)) {
 				list.add(player);
 			}

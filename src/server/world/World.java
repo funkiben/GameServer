@@ -14,11 +14,13 @@ import net.funkitech.util.Location;
 
 public class World {
 	
+	private final GameServer server;
 	private final WorldGenerator generator;
 	private final File folder = new File("world");
 	private final Map<Location, Chunk> chunkMap = new HashMap<Location, Chunk>();
 
-	public World(WorldGenerator generator) {
+	public World(GameServer server, WorldGenerator generator) {
+		this.server = server;
 		this.generator = generator;
 		generator.setWorld(this);
 		
@@ -26,7 +28,7 @@ public class World {
 		
 		load();
 		
-		GameServer.inst.getEventManager().registerListener(new WorldObjectMoveListener(this));
+		server.getEventManager().registerListener(new WorldObjectMoveListener(this));
 		
 	}
 	
@@ -35,7 +37,7 @@ public class World {
 		
 		for (File file : folder.listFiles()) {
 			if (!file.getName().equals(".DS_Store")) {
-				Chunk chunk = new Chunk(file);
+				Chunk chunk = new Chunk(this, file);
 				chunkMap.put(chunk.getLocation(), chunk);
 			}
 		}
@@ -43,6 +45,10 @@ public class World {
 	
 	public File getFolder() {
 		return folder;
+	}
+	
+	public GameServer getServer() {
+		return server;
 	}
 	
 	public WorldGenerator getGenerator() {
@@ -57,7 +63,7 @@ public class World {
 		Chunk chunk = chunkMap.get(Chunk.getChunkLocation(x, y));
 		
 		if (chunk == null) {
-			GameServer.inst.log("Generating new chunk " + x + ", " + y);
+			server.log("Generating new chunk " + x + ", " + y);
 			chunk = new Chunk(this, x, y);
 			chunkMap.put(chunk.getLocation(), chunk);
 		}

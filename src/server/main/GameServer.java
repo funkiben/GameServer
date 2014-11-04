@@ -38,14 +38,14 @@ public class GameServer extends Server {
 		
 		new ServerTickThread(this, config.getTPS());
 		
-		getMessageListeningManager().registerListeners(new CreateAccountMessageListener(), new LoginMessageListener(), new PlayerMessageListener());
-		
+		accountDB = new UserAccountDB(this);
+
 		eventManager.registerListener(banManager);
 		
-		accountDB = new UserAccountDB();
+		getMessageListeningManager().registerListeners(new PlayerMessageListener());
 		
 		log("Loading world with " + config.getWorldGenerator().getName() + " WorldGenerator");
-		world = new World(config.getWorldGenerator());
+		world = new World(this, config.getWorldGenerator());
 		log(world.getChunks().size() + " chunks loaded");
 		
 	}

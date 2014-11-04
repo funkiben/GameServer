@@ -12,13 +12,21 @@ import server.world.object.Player;
 
 public class UserAccountDB {
 	
+	private final GameServer server;
 	private final File userDir = new File("users");
 	private final Map<String,UserAccount> map = new HashMap<String,UserAccount>();
 	
-	public UserAccountDB() {		
+	public UserAccountDB(GameServer server) {		
+		this.server = server;
+		server.getMessageListeningManager().registerListeners(new CreateAccountMessageListener(this), new LoginMessageListener(this));
+		
 		userDir.mkdir();
 		
 		load();
+	}
+	
+	public GameServer getServer() {
+		return server;
 	}
 	
 	public void load() {
@@ -80,7 +88,7 @@ public class UserAccountDB {
 		account.addIP(ip);
 		map.put(name, account);
 		
-		Player player = GameServer.inst.createNewPlayer(name, false);
+		Player player = server.createNewPlayer(name, false);
 		
 		account.setObjectID(player.getId());
 		

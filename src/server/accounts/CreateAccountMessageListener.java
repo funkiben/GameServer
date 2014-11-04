@@ -6,8 +6,6 @@ import net.funkitech.util.server.ClientHandler;
 import net.funkitech.util.server.messaging.Message;
 import net.funkitech.util.server.messaging.MessageHandler;
 import net.funkitech.util.server.messaging.MessageListener;
-import server.main.GameServer;
-
 
 public class CreateAccountMessageListener implements MessageListener {
 	
@@ -15,11 +13,14 @@ public class CreateAccountMessageListener implements MessageListener {
 	private static final Message MSG_USERNAME_TAKEN = new Message("accountInvalid", "Username taken.");
 	private static final Message MSG_ACCOUNT_VALID = new Message("accountValid");
 	
+	private final UserAccountDB db;
+	
+	public CreateAccountMessageListener(UserAccountDB db) {
+		this.db = db;
+	}
 	
 	@MessageHandler(names = "createAccount")
 	public void createAccount(ClientHandler client, String username, String password) throws IOException {
-		
-		UserAccountDB db = GameServer.inst.getUserAccountDB();
 		
 		if (!db.checkUsername(username)) {
 			client.sendMessage(MSG_INVALID_USERNAME);
@@ -33,7 +34,7 @@ public class CreateAccountMessageListener implements MessageListener {
 		
 		db.createNewAccount(username, password, client.getAddress().toString());
 		
-		GameServer.inst.log("New account created: " + username + " @" + client.getAddress());
+		db.getServer().log("New account created: " + username + " @" + client.getAddress());
 		
 		client.sendMessage(MSG_ACCOUNT_VALID);
 		
