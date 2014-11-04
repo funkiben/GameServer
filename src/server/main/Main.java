@@ -8,8 +8,6 @@ import server.command.*;
 
 public class Main {
 	
-	// peek a boo
-	
 	public static void main(String[] args) throws IOException {
 		ServerConfig cfg = new ServerConfig();
 		
