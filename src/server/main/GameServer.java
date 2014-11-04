@@ -36,6 +36,8 @@ public class GameServer extends Server {
 		
 		this.config = config;
 		
+		new ServerTickThread(this, config.getTPS());
+		
 		getMessageListeningManager().registerListeners(new CreateAccountMessageListener(), new LoginMessageListener(), new PlayerMessageListener());
 		
 		eventManager.registerListener(banManager);

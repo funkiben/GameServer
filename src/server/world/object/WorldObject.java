@@ -3,6 +3,10 @@ package server.world.object;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import server.event.EventHandler;
+import server.event.EventPriority;
+import server.event.Listener;
+import server.event.server.ServerTickEvent;
 import server.event.world.object.WorldObjectMoveEvent;
 import server.main.GameServer;
 import server.world.Chunk;
@@ -14,6 +18,7 @@ public class WorldObject implements Serializable {
 	private static final long serialVersionUID = -3138850811927672440L;
 	
 	private transient boolean save = true;
+	private transient Listener serverTickListener = null;
 	
 	protected final Location location;
 	private final WorldObjectType type;
@@ -30,6 +35,7 @@ public class WorldObject implements Serializable {
 	
 	public void initializeFromChunk() {
 		save = true;
+		serverTickListener = null;
 		onLoadFromChunk();
 	}
 	
@@ -140,5 +146,44 @@ public class WorldObject implements Serializable {
 	public void onLoadFromChunk() {
 		
 	}
+	
+	
+	
+	
+	public void enableServerTickListener() {
+		serverTickListener = new ServerTickListener(this);
+		GameServer.inst.getEventManager().registerListener(serverTickListener);
+	}
+	
+	public void disableServerTickListener() {
+		GameServer.inst.getEventManager().unregisterListener(serverTickListener);
+		serverTickListener = null;
+	}
+	
+	public boolean isServerTickListenerEnabled() {
+		return serverTickListener != null;
+	}
+	
+	public void onServerTick(int ticks) {
+		
+	}
+	
+	private static class ServerTickListener implements Listener {
+		
+		private final WorldObject object;
+		
+		public ServerTickListener(WorldObject object) {
+			this.object = object;
+		}
+		
+		@EventHandler(priority = EventPriority.NORMAL)
+		public void onTick(ServerTickEvent event) {
+			object.onServerTick(event.getTicks());
+		}
+		
+		
+	}
+	
+	
 	
 }
