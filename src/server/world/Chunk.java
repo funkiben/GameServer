@@ -198,6 +198,8 @@ public class Chunk {
 			return false;
 		}
 		
+		
+		object.disableServerTickListener();
 		object.removeFromPlayers();
 		objects.remove(id);
 		

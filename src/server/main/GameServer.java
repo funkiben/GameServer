@@ -46,6 +46,8 @@ public class GameServer extends Server {
 		world = new World(this, config.getWorldGenerator());
 		log(world.getChunks().size() + " chunks loaded");
 		
+		new PlayerClickMouseListener(this);
+		
 		new ServerTickThread(this, config.getTPS());
 		
 	}

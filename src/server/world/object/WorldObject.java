@@ -155,8 +155,10 @@ public class WorldObject implements Serializable {
 	}
 	
 	public void disableServerTickListener() {
-		GameServer.inst.getEventManager().unregisterListener(serverTickListener);
-		serverTickListener = null;
+		if (serverTickListener != null) {
+			GameServer.inst.getEventManager().unregisterListener(serverTickListener);
+			serverTickListener = null;
+		}
 	}
 	
 	public boolean isServerTickListenerEnabled() {
@@ -167,7 +169,7 @@ public class WorldObject implements Serializable {
 		
 	}
 	
-	private static class ServerTickListener implements Listener {
+	public static class ServerTickListener implements Listener {
 		
 		private final WorldObject object;
 		
