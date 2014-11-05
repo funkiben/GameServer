@@ -8,7 +8,7 @@ public class Arrow extends WorldObject {
 	private static final long serialVersionUID = 1L;
 	
 	private static final int LIFE_SPAN = 20 * 5;
-	private static final float SPEED = 5f;
+	private static final float SPEED = 30f;
 	
 	
 	private final Location velocity;

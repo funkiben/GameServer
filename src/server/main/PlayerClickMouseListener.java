@@ -26,9 +26,7 @@ public class PlayerClickMouseListener implements Listener {
 			
 			double angle = new Location(0, 0).angleBetween(location.subtract(click));
 			
-			Location dir = new Location(0, 0).rotate(angle);
-			
-			System.out.println(dir);
+			Location dir = new Location(10000, 0).rotate(angle);
 			
 			Arrow arrow = new Arrow(location, dir);
 			
