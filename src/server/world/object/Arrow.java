@@ -5,10 +5,10 @@ import net.funkitech.util.Location;
 
 public class Arrow extends WorldObject {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4351439401917649039L;
 	
 	private static final int LIFE_SPAN = 20;
-	private static final float SPEED = 30F;
+	private static final float SPEED = 60F;
 	
 	
 	private final Location velocity;

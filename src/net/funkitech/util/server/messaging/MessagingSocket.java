@@ -68,7 +68,7 @@ public class MessagingSocket extends Thread {
 		return output;
 	}
 	
-	public void sendMessage(Message...msgs) throws IOException {
+	public synchronized void sendMessage(Message...msgs) throws IOException {
 		for (Message msg : msgs) {
 			output.writeObject(msg);	
 		}
