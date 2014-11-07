@@ -32,7 +32,6 @@ public class PlayerClickMouseListener implements Listener {
 			
 			server.getWorld().addObject(arrow);
 			
-			server.log(event.getPlayer().getName() + " has fired an arrow!");
 			
 			
 		}

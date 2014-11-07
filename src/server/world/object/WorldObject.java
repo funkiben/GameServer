@@ -146,9 +146,6 @@ public class WorldObject implements Serializable {
 		
 	}
 	
-	
-	
-	
 	public void enableServerTickListener() {
 		serverTickListener = new ServerTickListener(this);
 		GameServer.inst.getEventManager().registerListener(serverTickListener);
