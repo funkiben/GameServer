@@ -12,7 +12,8 @@ import net.funkitech.util.server.messaging.MessageListeningManager;
 
 public class Server {
 	
-	private static final SimpleDateFormat LOG_FORMAT = new SimpleDateFormat("[kk:mm:ss] ");
+	private static final SimpleDateFormat LOG_DATE_FORMAT = new SimpleDateFormat("kk:mm:ss");
+	private static final String LOG_FORMAT = "[%date% %thread%] %msg%";
 	
 	private final String name;
 	private final int port;
@@ -61,7 +62,10 @@ public class Server {
 	}
 	
 	public String formatMSG(String msg) {
-		return LOG_FORMAT.format(new Date()) + msg;
+		return LOG_FORMAT
+				.replace("%date%", LOG_DATE_FORMAT.format(new Date()))
+				.replace("%thread%", Thread.currentThread().getName())
+				.replace("%msg%", msg);
 	}
 	
 	public void log(String msg) {

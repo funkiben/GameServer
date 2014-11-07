@@ -167,7 +167,10 @@ public class Chunk {
 	public void changeObjectsChunk(WorldObject object, Chunk newChunk) {
 		objects.remove(object.getId());
 		newChunk.objects.put(object.getId(), object);
-		needsSave = true;
+		
+		if (object.canSave()) {
+			needsSave = true;
+		}
 	}
 	
 	public void addObject(WorldObject object) {
@@ -180,7 +183,9 @@ public class Chunk {
 		
 		object.updateWithPlayers();
 		
-		needsSave = true;
+		if (object.canSave()) {
+			needsSave = true;
+		}
 		
 	}
 	
@@ -203,7 +208,9 @@ public class Chunk {
 		object.removeFromPlayers();
 		objects.remove(id);
 		
-		needsSave = true;
+		if (object.canSave()) {
+			needsSave = true;
+		}
 		
 		return true;
 	}

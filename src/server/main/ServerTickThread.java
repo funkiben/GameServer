@@ -9,7 +9,7 @@ public class ServerTickThread extends Thread {
 	private int ticks = 0;
 	
 	public ServerTickThread(GameServer server, float tps) {
-		super();
+		super("ServerTicker");
 		
 		this.server = server;
 		this.tps = tps;

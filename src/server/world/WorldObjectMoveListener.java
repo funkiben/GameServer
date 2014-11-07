@@ -23,7 +23,9 @@ public class WorldObjectMoveListener implements Listener {
 			oldChunk.changeObjectsChunk(event.getWorldObject(), newChunk);
 		}
 		
-		newChunk.setNeedsSave(true);
+		if (event.getWorldObject().canSave()) {
+			newChunk.setNeedsSave(true);
+		}
 	}
 	
 }

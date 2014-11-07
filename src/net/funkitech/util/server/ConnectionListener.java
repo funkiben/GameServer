@@ -12,7 +12,7 @@ public class ConnectionListener extends Thread {
 	private volatile boolean finished = false;
 	
 	public ConnectionListener(Server server) throws IOException {
-		super(server.getName() + "ConnectionListener");
+		super("ConnectionListener");
 		
 		this.server = server;
 		

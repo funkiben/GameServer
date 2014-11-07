@@ -18,7 +18,7 @@ public class MessagingSocket extends Thread {
 	private volatile boolean exitted = false;
 	
 	public MessagingSocket(MessageListeningManager msgListeningManager, Socket socket) throws IOException {
-		super("MessageListener" + socket.getInetAddress());
+		super("MessagingSocket" + socket.getInetAddress());
 		
 		this.msgListeningManager = msgListeningManager;
 		this.socket = socket;
