@@ -176,4 +176,8 @@ public class Player extends WorldObject {
 		}
 	}
 	
+	public void sendChatMsg(String msg) {
+		sendMessage("chat", msg);
+	}
+	
 }

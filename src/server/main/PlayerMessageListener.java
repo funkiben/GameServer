@@ -17,9 +17,14 @@ public class PlayerMessageListener implements MessageListener {
 		Player player = server.getPlayer(client);
 		
 		player.move(delta);
-			
-		
 		
 	}
-
+	
+	@MessageHandler(names = "chat")
+	public void chat(ClientHandler client, String msg) {
+		Player player = server.getPlayer(client);
+		
+		server.broadcastChatMsg("[" + player.getName() + "] " + msg);
+	}
+	
 }

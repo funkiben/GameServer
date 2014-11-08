@@ -42,7 +42,7 @@ public class GameServer extends Server {
 		
 		getMessageListeningManager().registerListeners(new PlayerMessageListener(), new PlayerButtonMessageListener(this));
 		
-		log("Loading world with " + config.getWorldGenerator().getName() + " WorldGenerator");
+		log("Loading world with " + config.getWorldGenerator().getName() + " generator");
 		world = new World(this, config.getWorldGenerator());
 		log(world.getChunks().size() + " chunks loaded");
 		
@@ -160,6 +160,14 @@ public class GameServer extends Server {
 		log("Saving world...");
 		int amount = world.save(false);
 		log("Done. Saved " + amount + " chunks");
+	}
+	
+	public void broadcastChatMsg(String msg) {
+		for (Player player : getOnlinePlayes()) {
+			player.sendChatMsg(msg);
+		}
+		
+		log("[CHAT] " + msg);
 	}
 
 }
