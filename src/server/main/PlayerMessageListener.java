@@ -20,11 +20,4 @@ public class PlayerMessageListener implements MessageListener {
 		
 	}
 	
-	@MessageHandler(names = "chat")
-	public void chat(ClientHandler client, String msg) {
-		Player player = server.getPlayer(client);
-		
-		server.broadcastChatMsg("[" + player.getName() + "] " + msg);
-	}
-	
 }

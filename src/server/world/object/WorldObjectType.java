@@ -4,9 +4,12 @@ public enum WorldObjectType {
 	
 	
 	PLAYER 				(0x001),
-	BLOCK  				(0x002),
-	CONTROLLED_PLAYER   (0x003),
-	ARROW				(0x004)
+	CONTROLLED_PLAYER   (0x002),
+	ARROW				(0x003),
+	
+	TILE_COBBLE			(0x010),
+	
+	TREE				(0x020)
 	;
 	
 	

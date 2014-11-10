@@ -161,13 +161,5 @@ public class GameServer extends Server {
 		int amount = world.save(false);
 		log("Done. Saved " + amount + " chunks");
 	}
-	
-	public void broadcastChatMsg(String msg) {
-		for (Player player : getOnlinePlayes()) {
-			player.sendChatMsg(msg);
-		}
-		
-		log("[CHAT] " + msg);
-	}
 
 }

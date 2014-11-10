@@ -29,6 +29,8 @@ public class Player extends WorldObject {
 			}
 		}
 		
+		
+		
 		return list;
 	}
 	
@@ -174,10 +176,6 @@ public class Player extends WorldObject {
 			
 			removeChunk(oldchunk);
 		}
-	}
-	
-	public void sendChatMsg(String msg) {
-		sendMessage("chat", msg);
 	}
 	
 }
