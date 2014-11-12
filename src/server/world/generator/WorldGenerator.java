@@ -1,7 +1,10 @@
-package server.world;
+package server.world.generator;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import server.world.Chunk;
+import server.world.World;
 
 
 public abstract class WorldGenerator {
@@ -10,6 +13,7 @@ public abstract class WorldGenerator {
 	
 	static {
 		new TestWorldGenerator();
+		new TileV1WorldGenerator();
 	}
 	
 	public static WorldGenerator byName(String name) {

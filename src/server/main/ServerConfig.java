@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import server.world.WorldGenerator;
+import server.world.generator.WorldGenerator;
 import net.funkitech.util.ConfigurationFile;
 
 

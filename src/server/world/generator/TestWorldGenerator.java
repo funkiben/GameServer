@@ -1,6 +1,7 @@
-package server.world;
+package server.world.generator;
 
 import net.funkitech.util.Location;
+import server.world.Chunk;
 import server.world.object.WorldObject;
 import server.world.object.WorldObjectType;
 

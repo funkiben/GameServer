@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import server.main.GameServer;
+import server.world.generator.WorldGenerator;
 import server.world.object.WorldObject;
 import server.world.object.WorldObjectType;
 import net.funkitech.util.Location;
