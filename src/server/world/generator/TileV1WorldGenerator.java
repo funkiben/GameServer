@@ -27,6 +27,18 @@ public class TileV1WorldGenerator extends TileWorldGenerator {
 			plotter.setObject(x, y, WorldObjectType.TREE, 150, 250, (int) (Math.random() * 2));
 		}
 		
+		
+		
+		
+		if (plotter.getChunk().getX() == 0 && plotter.getChunk().getY() == 0) {
+			plotter.getChunk().setData(0, getTilesAlongSide() / 2);
+		}
+		
+		
+		
+		
+		
+		
 	}
 
 }
