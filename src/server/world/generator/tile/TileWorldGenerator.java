@@ -1,9 +1,11 @@
-package server.world.generator;
+package server.world.generator.tile;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import net.funkitech.util.Location;
 import server.world.Chunk;
+import server.world.generator.WorldGenerator;
 import server.world.object.WorldObject;
 import server.world.object.WorldObjectType;
 
@@ -27,7 +29,7 @@ public abstract class TileWorldGenerator extends WorldGenerator {
 	public int getTilesAlongSide() {
 		return tilesAlongSide;
 	}
-
+	
 	@Override
 	public final void populateChunk(Chunk chunk) {
 
@@ -59,13 +61,25 @@ public abstract class TileWorldGenerator extends WorldGenerator {
 		private final WorldObject[][] tiles = new WorldObject[tilesAlongSide][tilesAlongSide];
 		private final WorldObject[][] objects = new WorldObject[tilesAlongSide][tilesAlongSide];
 		private final Chunk chunk;
+		private final Random random;
+		private final int seed;
 		
 		public ChunkTilePlotter(Chunk chunk) {
 			this.chunk = chunk;
+			random = getRandomForChunk(chunk);
+			seed = getChunksSeed(chunk);
 		}
 		
 		public Chunk getChunk() {
 			return chunk;
+		}
+		
+		public Random getRandom() {
+			return random;
+		}
+		
+		public int getSeed() {
+			return seed;
 		}
 		
 		public void setTile(int x, int y, WorldObjectType type, Object...customData) {
