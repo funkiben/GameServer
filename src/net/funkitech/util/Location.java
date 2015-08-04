@@ -1,6 +1,5 @@
 package net.funkitech.util;
 
-
 public class Location implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4628820845628799113L;
@@ -118,17 +117,14 @@ public class Location implements java.io.Serializable {
 		
 		return location.getX() == x && location.getY() == y;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		int hash = 7;
-	    
-	    hash = 79 * hash + (int) (Double.doubleToLongBits(x) ^ Double.doubleToLongBits(x) >>> 32);
-	    hash = 79 * hash + (int) (Double.doubleToLongBits(y) ^ Double.doubleToLongBits(y) >>> 32);
-	    
-	    return hash;
+	    long bits = Double.doubleToLongBits(x);
+	    bits ^= Double.doubleToLongBits(y) * 31;
+	    return (((int) bits) ^ ((int) (bits >> 32)));
 	}
-	
+
 	public Location clone() {
 		return new Location(x, y);
 	}

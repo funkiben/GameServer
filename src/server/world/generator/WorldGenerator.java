@@ -2,9 +2,11 @@ package server.world.generator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import server.world.Chunk;
 import server.world.World;
+import server.world.generator.tile.TileV1WorldGenerator;
 
 
 public abstract class WorldGenerator {
@@ -22,6 +24,7 @@ public abstract class WorldGenerator {
 	
 	private final String name;
 	protected World world;
+	private int seed;
 	
 	public WorldGenerator(String name) {
 		this.name = name;
@@ -32,8 +35,32 @@ public abstract class WorldGenerator {
 		return name;
 	}
 	
+	public int getSeed() {
+		return seed;
+	}
+	
+	public void setSeed(int seed) {
+		this.seed = seed;
+	}
+	
 	public void setWorld(World world) {
 		this.world = world;
+	}
+	
+	public Random getRandomForChunk(int x, int y) {
+		return new Random(getChunksSeed(x, y));
+	}
+	
+	public Random getRandomForChunk(Chunk chunk) {
+		return new Random(getChunksSeed(chunk.getX(), chunk.getY()));
+	}
+	
+	public int getChunksSeed(int x, int y) {
+		return (y << seed) ^ x;
+	}
+	
+	public int getChunksSeed(Chunk chunk) {
+		return getChunksSeed(chunk.getX(), chunk.getY());
 	}
 	
 	public abstract void populateChunk(Chunk chunk);

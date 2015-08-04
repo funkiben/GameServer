@@ -43,7 +43,9 @@ public class GameServer extends Server {
 		getMessageListeningManager().registerListeners(new PlayerMessageListener(), new PlayerButtonMessageListener(this));
 		
 		log("Loading world with " + config.getWorldGenerator().getName() + " generator");
+		log("Seed: " + config.getSeed());
 		world = new World(this, config.getWorldGenerator());
+		world.getGenerator().setSeed(config.getSeed());
 		log(world.getChunks().size() + " chunks loaded");
 		
 		new PlayerClickMouseListener(this);
