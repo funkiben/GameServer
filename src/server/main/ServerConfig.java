@@ -40,10 +40,6 @@ public class ServerConfig extends ConfigurationFile {
 		return WorldGenerator.byName(get("world-generator"));
 	}
 	
-	public int getSeed() {
-		return get("seed").hashCode();
-	}
-	
 	public float getTPS() {
 		return getFloat("tps");
 	}

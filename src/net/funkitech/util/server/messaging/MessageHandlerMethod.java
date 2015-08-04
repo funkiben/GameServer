@@ -2,23 +2,8 @@ package net.funkitech.util.server.messaging;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MessageHandlerMethod {
-	
-	private static final Map<Class<?>,Class<?>> primitives = new HashMap<Class<?>,Class<?>>();
-	
-	static {
-		primitives.put(Character.class, Character.TYPE);
-		primitives.put(Boolean.class, Boolean.TYPE);
-		primitives.put(Double.class, Double.TYPE);
-		primitives.put(Float.class, Float.TYPE);
-		primitives.put(Long.class, Long.TYPE);
-		primitives.put(Integer.class, Integer.TYPE);
-		primitives.put(Short.class, Short.TYPE);
-		primitives.put(Byte.class, Byte.TYPE);
-	}
 	
 	private final MessageHandler meta;
 	private final Method method;
@@ -82,11 +67,7 @@ public class MessageHandlerMethod {
 		}
 		
 		for (int i = 0; i < methodArgTypes.length; i++) {
-			if (
-					!methodArgTypes[i].isAssignableFrom(argTypes[i]) || 
-					primitives.containsKey(argTypes[i]) ? primitives.get(argTypes[i]) == methodArgTypes[i] : false
-					
-				) {
+			if (!methodArgTypes[i].isAssignableFrom(argTypes[i])) {
 				return false;
 			}
 		}

@@ -74,10 +74,6 @@ public class MessagingSocket extends Thread {
 		}
 	}
 	
-	public void sendMessage(String msg, Object...args) throws IOException {
-		sendMessage(new Message(msg, args));
-	}
-	
 	
 	
 	@Override
@@ -94,11 +90,7 @@ public class MessagingSocket extends Thread {
 					Object obj = input.readObject();
 						
 					if (obj instanceof Message) {
-						
-						if (msgListeningManager != null) {
-							msgListeningManager.call((Message) obj, this);
-						}
-						
+						msgListeningManager.call((Message) obj, this);
 					} else {
 						System.out.println("Recieved object that was not of the Message class");
 					}

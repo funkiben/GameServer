@@ -72,10 +72,6 @@ public class World {
 		return chunk;
 	}
 	
-	public boolean isChunkAt(int x, int y) {
-		return chunkMap.containsKey(Chunk.getChunkLocation(x, y));
-	}
-	
 	public List<Chunk> getChunks() {
 		return new ArrayList<Chunk>(chunkMap.values());
 	}

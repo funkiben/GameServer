@@ -32,7 +32,7 @@ public class TestWorldGenerator extends WorldGenerator {
 		
 		for (int i = 0; i < trees; i++) {
 			Location loc = new Location(Math.random() * Chunk.size, Math.random() * Chunk.size).add(chunk.getLocation());
-			object = new WorldObject(loc, WorldObjectType.TREE, treeWidth, treeHeight, (int) (Math.random() * 2));
+			object = new WorldObject(loc, WorldObjectType.TREE, treeWidth, treeHeight, (int) (Math.random() * 4));
 			chunk.addObject(object);
 		}
 		
