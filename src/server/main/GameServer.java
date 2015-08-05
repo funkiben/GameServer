@@ -11,6 +11,7 @@ import server.accounts.*;
 import server.event.EventManager;
 import server.event.player.PlayerDisconnectEvent;
 import server.world.World;
+import server.world.generator.WorldGenerator;
 import server.world.object.Player;
 import net.funkitech.util.Location;
 import net.funkitech.util.server.ClientHandler;
@@ -41,6 +42,8 @@ public class GameServer extends Server {
 		eventManager.registerListener(banManager);
 		
 		getMessageListeningManager().registerListeners(new PlayerMessageListener(), new PlayerButtonMessageListener(this));
+		
+		WorldGenerator.init(config.getSeed());
 		
 		log("Loading world with " + config.getWorldGenerator().getName() + " generator");
 		world = new World(this, config.getWorldGenerator());

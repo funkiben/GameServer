@@ -16,7 +16,7 @@ public class TileV1WorldGenerator extends TileWorldGenerator {
 		
 		for (int x = 0; x < getTilesAlongSide(); x++) {
 			for (int y = 0; y < getTilesAlongSide(); y++) {
-				plotter.setTile(x, y, WorldObjectType.TILE_COBBLE, (int) (Math.random() * 10));
+				plotter.setTile(x, y, WorldObjectType.TILE_COBBLE, (int) (getRandom().nextDouble() * 10));
 			}
 		}
 		
@@ -24,7 +24,7 @@ public class TileV1WorldGenerator extends TileWorldGenerator {
 			int x = (int) (Math.random() * getTilesAlongSide());
 			int y = (int) (Math.random() * getTilesAlongSide());
 			
-			plotter.setObject(x, y, WorldObjectType.TREE, 150, 250, (int) (Math.random() * 2));
+			plotter.setObject(x, y, WorldObjectType.TREE, 150, 250, (int) (getRandom().nextDouble() * 2));
 		}
 		
 		

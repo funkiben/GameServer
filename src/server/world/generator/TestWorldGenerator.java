@@ -20,19 +20,19 @@ public class TestWorldGenerator extends WorldGenerator {
 		
 		for (int x = 0; x < Chunk.size; x += tileSize) {
 			for (int y = 0; y < Chunk.size; y += tileSize) {
-				object = new WorldObject(new Location(x, y).add(chunk.getLocation()), WorldObjectType.TILE_COBBLE, tileSize, tileSize, (int) (Math.random() * 10));
+				object = new WorldObject(new Location(x, y).add(chunk.getLocation()), WorldObjectType.TILE_COBBLE, tileSize, tileSize, (int) (getRandom().nextDouble() * 10));
 				chunk.addObject(object);
 			}
 		}
 		
-		int trees = (int) (3 + (Math.random() * 5));
+		int trees = (int) (3 + (getRandom().nextDouble() * 5));
 		
 		int treeWidth = 100;
 		int treeHeight = 200;
 		
 		for (int i = 0; i < trees; i++) {
-			Location loc = new Location(Math.random() * Chunk.size, Math.random() * Chunk.size).add(chunk.getLocation());
-			object = new WorldObject(loc, WorldObjectType.TREE, treeWidth, treeHeight, (int) (Math.random() * 4));
+			Location loc = new Location(getRandom().nextDouble() * Chunk.size, getRandom().nextDouble() * Chunk.size).add(chunk.getLocation());
+			object = new WorldObject(loc, WorldObjectType.TREE, treeWidth, treeHeight, (int) (getRandom().nextDouble() * 4));
 			chunk.addObject(object);
 		}
 		

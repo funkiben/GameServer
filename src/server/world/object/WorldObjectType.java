@@ -9,6 +9,7 @@ public enum WorldObjectType {
 	
 	TILE_COBBLE			(0x010),
 	TILE_WATER			(0x011),
+	TILE_GRASS			(0x012),
 	
 	TREE				(0x020)
 	;

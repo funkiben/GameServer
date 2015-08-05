@@ -44,4 +44,8 @@ public class ServerConfig extends ConfigurationFile {
 		return getFloat("tps");
 	}
 	
+	public int getSeed() {
+		return get("seed").hashCode();
+	}
+	
 }
