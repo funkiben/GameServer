@@ -29,7 +29,8 @@ public class Main {
 			new CmdSaveWorld(),
 			new CmdTestObject(),
 			new CmdObjects(),
-			new CmdChunk()
+			new CmdChunk(),
+			new CmdTeleport()
 		);
 		
 		Scanner scanner = new Scanner(System.in);

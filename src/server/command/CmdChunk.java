@@ -12,6 +12,7 @@ public class CmdChunk extends CmdServer {
 		
 		addArg("x", ArgumentType.INTEGER, "X position of the chunk");
 		addArg("y", ArgumentType.INTEGER, "Y position of the chunk");
+		addFlag("c", "Create new chunk if there isn't one at given coordinates");
 	}
 
 	@Override
@@ -19,7 +20,11 @@ public class CmdChunk extends CmdServer {
 		int x = (int) args.get("x");
 		int y = (int) args.get("y");
 		
-		Chunk chunk = server.getWorld().getChunk(x, y);
+		Chunk chunk = server.getWorld().getChunk(x, y, flags.containsKey("c"));
+		
+		if (chunk == null) {
+			return "No chunk exists at given coordinates";
+		}
 		
 		String str = new String();
 		

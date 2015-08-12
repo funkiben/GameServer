@@ -80,12 +80,13 @@ public class UserAccount {
 		
 		String str = new String();
 		for (int i = 0; i < ips.length; i++) {
-			str += ips[i] + (i > 0 ? "," : "");
+			str += ips[i] + ",";
 		}
 		
 		str += ip;
 		
 		infoFile.getWriter().setLine(IP_ADDRESSES, str);
+		
 	}
 	
 	public void setJoinDate(Date date) {

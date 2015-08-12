@@ -15,9 +15,9 @@ public abstract class WorldGenerator {
 	
 	public static void init(int s) {
 		seed = s;
+		TileImageDB.init();
 		new TestWorldGenerator();
 		new TileV1WorldGenerator();
-		new TileV2WorldGenerator();
 	}
 	
 	public static WorldGenerator byName(String name) {

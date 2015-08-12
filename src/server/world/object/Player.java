@@ -8,7 +8,7 @@ import net.funkitech.util.Location;
 import net.funkitech.util.server.ClientHandler;
 import net.funkitech.util.server.messaging.Message;
 import server.accounts.UserAccount;
-import server.event.player.PlayerMoveEvent;
+import server.event.player.PlayerTeleportEvent;
 import server.main.GameServer;
 import server.world.Chunk;
 
@@ -25,7 +25,7 @@ public class Player extends WorldObject {
 		
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
-				list.add(GameServer.inst.getWorld().getChunk(x + tx, y + ty));
+				list.add(GameServer.inst.getWorld().getChunk(x + tx, y + ty, true));
 			}
 		}
 		
@@ -91,26 +91,29 @@ public class Player extends WorldObject {
 		return handler.getAddress().toString();
 	}
 	
-	@Override
-	public boolean move(Location delta) {
-		PlayerMoveEvent event = new PlayerMoveEvent(this, delta);
+	public boolean teleport(Location dest) {
+		PlayerTeleportEvent event = new PlayerTeleportEvent(this, dest.subtract(location));
 		GameServer.inst.getEventManager().callEvent(event);
 		
-		Location prevloc = event.getPrevLocation().clone();
-		Location newloc = event.getNewLocation().clone();
+		Location prevloc = event.getPrevLocation();
+		Location newloc = event.getNewLocation();
 		
 		if (!event.isCancelled() && !event.getDelta().isZero()) {
-			location.set(event.getNewLocation());
+		
+			boolean success = setLocation(newloc);
 			
-			updateWithPlayers();
-			
-			sendNewChunks(prevloc, newloc);
-			
-			return true;
+			if (success) {
+				sendNewChunks(prevloc, newloc);
+				return true;
+			}
 			
 		}
 		
 		return false;
+	}
+	
+	public boolean teleport(double x, double y) {
+		return teleport(new Location(x, y));
 	}
 	
 	public List<Chunk> getPlayersChunks() {
@@ -152,7 +155,7 @@ public class Player extends WorldObject {
 		return canSeeChunk(object.getChunkX(), object.getChunkY());
 	}
 	
-	private void sendNewChunks(Location prevloc, Location newloc) {
+	public void sendNewChunks(Location prevloc, Location newloc) {
 		List<Chunk> newChunks = Player.getPlayersChunks(newloc);
 		List<Chunk> oldChunks = Player.getPlayersChunks(prevloc);
 		
@@ -176,6 +179,10 @@ public class Player extends WorldObject {
 			
 			removeChunk(oldchunk);
 		}
+	}
+	
+	public void onMove(Location loc) {
+		location.set(loc);
 	}
 	
 }

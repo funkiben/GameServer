@@ -181,7 +181,7 @@ public class Chunk {
 		
 		objects.put(object.getId(), object);
 		
-		object.updateWithPlayers();
+		object.updateWithPlayers(false);
 		
 		if (object.canSave()) {
 			needsSave = true;

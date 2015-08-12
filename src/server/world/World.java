@@ -56,17 +56,21 @@ public class World {
 		return generator;
 	}
 	
-	public Chunk getChunk(Location location) {
-		return getChunk(Chunk.toChunkX(location.getX()), Chunk.toChunkY(location.getY()));
+	public Chunk getChunk(Location location, boolean createNew) {
+		return getChunk(Chunk.toChunkX(location.getX()), Chunk.toChunkY(location.getY()), createNew);
 	}
 	
-	public Chunk getChunk(int x, int y) {
+	public Chunk getChunk(int x, int y, boolean createNew) {
 		Chunk chunk = chunkMap.get(Chunk.getChunkLocation(x, y));
 		
 		if (chunk == null) {
-			server.log("Generating new chunk " + x + ", " + y);
-			chunk = new Chunk(this, x, y);
-			chunkMap.put(chunk.getLocation(), chunk);
+			if (createNew) {
+				server.log("Generating new chunk " + x + ", " + y);
+				chunk = new Chunk(this, x, y);
+				chunkMap.put(chunk.getLocation(), chunk);
+			} else {
+				return null;
+			}
 		}
 		
 		return chunk;
@@ -123,7 +127,7 @@ public class World {
 	}
 	
 	public void addObject(WorldObject object) {
-		getChunk(object.getLocation()).addObject(object);
+		getChunk(object.getLocation(), true).addObject(object);
 	}
 	
 	public int getUnusedObjectID() {

@@ -46,6 +46,10 @@ public class WorldObject implements Serializable {
 		return move(location.subtract(this.location));
 	}
 	
+	public boolean setLocation(double x, double y) {
+		return setLocation(new Location(x, y));
+	}
+	
 	public void setSave(boolean b) {
 		save = b;
 	}
@@ -56,7 +60,7 @@ public class WorldObject implements Serializable {
 		if (!visible) {
 			removeFromPlayers();
 		} else {
-			updateWithPlayers();
+			updateWithPlayers(false);
 		}
 	}
 	
@@ -75,13 +79,17 @@ public class WorldObject implements Serializable {
 		if (!event.isCancelled() && !event.getDelta().isZero()) {
 			location.set(event.getNewLocation());
 			
-			updateWithPlayers();
+			updateWithPlayers(true);
 			
 			return true;
 			
 		}
 		
 		return false;
+	}
+	
+	public boolean move(double x, double y) {
+		return move(new Location(x, y));
 	}
 	
 	public int getId() {
@@ -97,22 +105,26 @@ public class WorldObject implements Serializable {
 	}
 	
 	public Chunk getChunk() {
-		return GameServer.inst.getWorld().getChunk(location);
+		return GameServer.inst.getWorld().getChunk(location, true);
 	}
 	
-	public void updateWithPlayers() {
+	public void updateWithPlayers(boolean includeSelf) {
 		for (Player player : GameServer.inst.getOnlinePlayes()) {
-			updateWithPlayer(player);
+			updateWithPlayer(player, includeSelf);
 		}
 	}
 	
-	public boolean updateWithPlayer(Player player) {
-		if (player != this && player.canSeeObjectsChunk(this) && visible) {
+	private boolean updateWithPlayer(Player player, boolean includeSelf) {
+		if ((player != this && player.canSeeObjectsChunk(this) && visible) || includeSelf) {
 			player.sendMessage(getMessage());
 			return true;
 		}
 		
 		return false;
+	}
+	
+	public boolean updateWithPlayer(Player player) {
+		return updateWithPlayer(player, false);
 	}
 	
 	public void removeFromPlayers() {
